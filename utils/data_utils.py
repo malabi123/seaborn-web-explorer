@@ -19,7 +19,11 @@ def get_input_columns_validate(col_inp: List[str], allowed_columns: List[str]) -
 
 
 def is_filters_none(filter_col, op, number):
-    return not filter_col and not op and not number
+    return (
+        not (filter_col or "").strip() and
+        not (op or "").strip() and
+        not (number or "").strip()
+    )
 
 
 def get_filter_column_validate(filter_column, filter_columns):
@@ -71,6 +75,14 @@ def apply_filter(df, filter_column, operation, number):
             raise ValueError(f"Invalid operation: {operation}")
 
 
+def replace_underscores(strings: List[str]) -> List[str]:
+    return [s.replace("_", " ") for s in strings]
+
+
+def replace_spaces(strings: List[str]) -> List[str]:
+    return [s.replace(" ", "_") for s in strings]
+
+
 def get_columns():
     df = ds.get_df()
     allowed_columns = df.columns
@@ -85,32 +97,34 @@ def a1(col_inp: List[str], filter_column, operation, number):
 
     try:
         col_inp = get_input_columns_validate(col_inp, allowed_columns)
+        df = df[col_inp]
     except ValueError as e:
         errors.append(str(e))
 
-    if is_filters_none(filter_column, operation, number):
-        return (df[col_inp].to_html(), col_inp, EMPTY, EMPTY, EMPTY, errors)
+    if not is_filters_none(filter_column, operation, number):
+        try:
+            filter_column = get_filter_column_validate(
+                filter_column, filter_columns)
+        except ValueError as e:
+            errors.append(str(e))
+        try:
+            number = get_number_from_str(number)
+        except ValueError as e:
+            errors.append(str(e))
 
-    try:
-        filter_column = get_filter_column_validate(
-            filter_column, filter_columns)
-    except ValueError as e:
-        errors.append(str(e))
+        try:
+            operation = validate_operation(operation)
+        except ValueError as e:
+            errors.append(str(e))
+        if not errors:
+            df = apply_filter(df, filter_column, operation, number)
 
-    try:
-        number = get_number_from_str(number)
-    except ValueError as e:
-        errors.append(str(e))
-
-    try:
-        operation = validate_operation(operation)
-    except ValueError as e:
-        errors.append(str(e))
-    if not errors:
-        df = apply_filter(df, filter_column, operation, number)
-        return (df[col_inp].to_html(), col_inp, filter_column, operation, number, errors)
     else:
-        return (df.to_html(), col_inp, filter_column, operation, number, errors)
+        filter_column = EMPTY
+        operation = EMPTY
+        number = EMPTY
+
+    return (df.to_html().replace('_', " "), col_inp, filter_column, operation, number, errors)
 
 
 __all__ = ['a1', 'OPERATIONS', 'get_columns']

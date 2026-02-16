@@ -6,7 +6,6 @@
 
 <form method="get" action="/data" class="data-form">
 
-    <!-- Column Selection -->
     <fieldset class="form-group">
         <legend>Select Columns:</legend>
         <div class="checkbox-group">
@@ -20,42 +19,40 @@
         </div>
     </fieldset>
 
-    <!-- Filter Column -->
-    <div class="form-group">
-        <label for="filtered_column">Filtered Column:</label>
-        <select id="filtered_column" name="filtered_column">
-            <option value=""></option>
-            {% for item in filter_columns %}
-                <option value="{{ item }}" {% if item == filtered_column %}selected{% endif %}>
-                    {{ item }}
-                </option>
-            {% endfor %}
-        </select>
-    </div>
+    <div class="filter-controls-row">
+        <div class="form-group flex-item">
+            <label for="filtered_column">Filtered Column:</label>
+            <select id="filtered_column" name="filtered_column" class="form-input">
+                <option value=""></option>
+                {% for item in filter_columns %}
+                    <option value="{{ item }}" {% if item == filtered_column %}selected{% endif %}>
+                        {{ item }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
 
-    <!-- Operation -->
-    <div class="form-group">
-        <label for="operation">Operation:</label>
-        <select id="operation" name="operation">
-            <option value=""></option>
-            {% for item in operations %}
-                <option value="{{ item }}" {% if item == operation %}selected{% endif %}>
-                    {{ item }}
-                </option>
-            {% endfor %}
-        </select>
-    </div>
+        <div class="form-group flex-item">
+            <label for="operation">Operation:</label>
+            <select id="operation" name="operation" class="form-input">
+                <option value=""></option>
+                {% for item in operations %}
+                    <option value="{{ item }}" {% if item == operation %}selected{% endif %}>
+                        {{ item }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
 
-    <!-- Number -->
-    <div class="form-group">
-        <label for="number">Number:</label>
-        <input type="number" id="number" name="number" value="{{ number if number is not none else '' }}">
+        <div class="form-group flex-item">
+            <label for="number">Number:</label>
+            <input type="number" id="number" name="number" class="form-input" value="{{ number if number is not none else '' }}">
+        </div>
     </div>
 
     <button type="submit" class="btn-submit">Submit</button>
 </form>
 
-<!-- Errors -->
 {% if errors %}
     <div class="alert alert--error">
         <strong>Please fix the following errors:</strong>
@@ -67,7 +64,6 @@
     </div>
 {% endif %}
 
-<!-- Table Output -->
 <div class="table-container">
     {{ table | safe }}
 </div>
