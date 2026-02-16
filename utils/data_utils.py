@@ -75,14 +75,6 @@ def apply_filter(df, filter_column, operation, number):
             raise ValueError(f"Invalid operation: {operation}")
 
 
-def replace_underscores(strings: List[str]) -> List[str]:
-    return [s.replace("_", " ") for s in strings]
-
-
-def replace_spaces(strings: List[str]) -> List[str]:
-    return [s.replace(" ", "_") for s in strings]
-
-
 def get_columns():
     df = ds.get_df()
     allowed_columns = df.columns
@@ -97,7 +89,6 @@ def a1(col_inp: List[str], filter_column, operation, number):
 
     try:
         col_inp = get_input_columns_validate(col_inp, allowed_columns)
-        df = df[col_inp]
     except ValueError as e:
         errors.append(str(e))
 
@@ -118,7 +109,7 @@ def a1(col_inp: List[str], filter_column, operation, number):
             errors.append(str(e))
         if not errors:
             df = apply_filter(df, filter_column, operation, number)
-
+            df = df[col_inp]
     else:
         filter_column = EMPTY
         operation = EMPTY
