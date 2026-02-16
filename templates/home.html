@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="home-hero">
+  <h2>Welcome to Seaborn Web Explorer</h2>
+  <p class="hero-description">
+    Explore your datasets with ease, analyze data, and visualize insights instantly. 
+    Navigate through datasets and answer analysis questions with interactive tools.
+  </p>
+  <div class="hero-buttons">
+    <a href="/data" class="btn-hero">Get Data</a>
+    <a href="/questions" class="btn-hero btn-secondary">Analysis Questions</a>
+  </div>
+</div>
+
+<div class="home-features">
+  <div class="feature-card">
+    <h3>Interactive Data Selection</h3>
+    <p>Select and filter columns from your dataset easily, with live previews and validations.</p>
+  </div>
+  <div class="feature-card">
+    <h3>Quick Analysis</h3>
+    <p>Answer key analysis questions quickly, with visualizations and detailed results.</p>
+  </div>
+  <div class="feature-card">
+    <h3>Beautiful Visuals</h3>
+    <p>Seaborn-powered plots make your data insights clear and easy to interpret.</p>
+  </div>
+</div>
+{% endblock %}

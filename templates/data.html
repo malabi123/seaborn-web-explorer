@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Get Data{% endblock %}
+
+{% block content %}
+<h2 class="page-title">Get Data</h2>
+
+<form method="get" action="/data" class="data-form">
+
+    <!-- Column Selection -->
+    <fieldset class="form-group">
+        <legend>Select Columns:</legend>
+        <div class="checkbox-group">
+            {% for item in columns %}
+                <label class="checkbox-label">
+                    <input type="checkbox" name="selected_columns" value="{{ item }}" 
+                    {% if item in selected_columns %}checked{% endif %}>
+                    {{ item }}
+                </label>
+            {% endfor %}
+        </div>
+    </fieldset>
+
+    <!-- Filter Column -->
+    <div class="form-group">
+        <label for="filtered_column">Filtered Column:</label>
+        <select id="filtered_column" name="filtered_column">
+            <option value=""></option>
+            {% for item in filter_columns %}
+                <option value="{{ item }}" {% if item == filtered_column %}selected{% endif %}>
+                    {{ item }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <!-- Operation -->
+    <div class="form-group">
+        <label for="operation">Operation:</label>
+        <select id="operation" name="operation">
+            <option value=""></option>
+            {% for item in operations %}
+                <option value="{{ item }}" {% if item == operation %}selected{% endif %}>
+                    {{ item }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <!-- Number -->
+    <div class="form-group">
+        <label for="number">Number:</label>
+        <input type="number" id="number" name="number" value="{{ number if number is not none else '' }}">
+    </div>
+
+    <button type="submit" class="btn-submit">Submit</button>
+</form>
+
+<!-- Errors -->
+{% if errors %}
+    <div class="alert alert--error">
+        <strong>Please fix the following errors:</strong>
+        <ul>
+            {% for err in errors %}
+                <li>{{ err }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
+<!-- Table Output -->
+<div class="table-container">
+    {{ table | safe }}
+</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Questions{% endblock %}
+
+{% block content %}
+<h2 class="page-title">Analysis Questions</h2>
+
+<div class="questions">
+  {% for q in questions_info %}
+    <div class="question-card">
+      <form method="get" action="/questions">
+        <input type="hidden" name="q" value="{{ loop.index }}">
+        <button type="submit" class="btn-question">
+          {{ q.title }}
+        </button>
+      </form>
+
+      <p class="question-explanation">
+        {{ q.explanation }}
+      </p>
+    </div>
+  {% endfor %}
+</div>
+
+<!-- Errors -->
+{% if errors %}
+<div class="alert alert--error">
+  <strong>Please fix the following errors:</strong>
+  <ul>
+    {% for err in errors %}
+      <li>{{ err }}</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+
+<!-- Answer -->
+{% if answer %}
+<div class="answer">
+  <h3>{{ answer[0] }}</h3>
+  <table>
+    <tbody>
+      {% for key, value in answer[1].items() %}
+        <tr>
+          <td><strong>{{ key }}</strong></td>
+          <td>{{ value }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% if answer[2] %}
+    <img src="/static/plots/{{ answer[2] }}" alt="{{ answer[0] }}" class="answer-img">
+  {% endif %}
+</div>
+{% endif %}
+{% endblock %}

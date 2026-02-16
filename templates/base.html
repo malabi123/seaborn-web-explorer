@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Seaborn Web Explorer{% endblock %}</title>
+  <link rel="stylesheet" href="/static/css/base.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header__container">
+      <h1 class="brand">Seaborn Web Explorer</h1>
+      {% if dataset_name %}
+      <div class="dataset">Dataset: <strong>{{ dataset_name }}</strong></div>
+      {% endif %}
+    </div>
+
+    <!-- NAVIGATION -->
+    <nav class="nav">
+      <a href="/" class="nav__link">Home</a>
+      <a href="/questions" class="nav__link">Questions</a>
+      <a href="/data" class="nav__link">Get Data</a>
+    </nav>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="container">
+    {% if error %}
+      <div class="alert alert--error">{{ error }}</div>
+    {% endif %}
+    
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>© 2026 Seaborn Web Explorer. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

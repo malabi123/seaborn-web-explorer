@@ -1,0 +1,52 @@
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# ===== Virtual Environments =====
+.venv/
+venv/
+env/
+
+# ===== Environment Variables =====
+.env
+.env.*
+*.env
+
+# ===== FastAPI / Uvicorn =====
+*.log
+uvicorn.log
+
+# ===== OS Files =====
+.DS_Store
+Thumbs.db
+
+# ===== Editor / IDE =====
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ===== Jupyter =====
+.ipynb_checkpoints/
+
+# ===== Static / Generated Files =====
+static/plots/
+static/uploads/
+
+# ===== Database (if you add one later) =====
+*.sqlite3
+*.db
+
+# ===== Node (if frontend tooling later) =====
+node_modules/
+
+# ===== Secrets =====
+secrets.json
+config.json
